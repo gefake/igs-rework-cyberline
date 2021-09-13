@@ -1,7 +1,7 @@
 local PANEL = {}
 
-local barTall = 50
-local btnWide = 70
+local barTall = 55
+local btnWide = 75
 
 function PANEL:Init()
 	self.activity = uigs.Create("igs_multipanel",self)

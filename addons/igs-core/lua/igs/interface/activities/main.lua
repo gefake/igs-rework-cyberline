@@ -15,7 +15,7 @@ hook.Add("IGS.CatchActivities","main",function(activity,sidebar)
 	-- сетка https://img.qweqwe.ovh/1487714173294.png
 	bg.tags = uigs.Create("DIconLayout", function(tags)
 		tags:SetWide(activity:GetWide() - 5 - 5)
-		tags:SetPos(5,5)
+		tags:SetPos(5, 5)
 		tags:SetSpaceX(10)
 		tags:SetSpaceY(10)
 		tags.Paint = null

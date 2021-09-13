@@ -87,7 +87,7 @@ function IGS.UI()
 		end
 
 		self:SetPos(20,0)
-		self:SetSize(150,27)
+		self:SetSize(250,27)
 		self:UPDBalance()
 		self:SetTooltip("Открыть список покупок")
 		self.Think = function(s)
@@ -97,7 +97,7 @@ function IGS.UI()
 		end
 
 		local add = uigs.Create("igs_button", mf)
-		add:SetPos(20 + 150 + 2,0)
+		add:SetPos(250,0)
 		add:SetSize(27,27)
 		add:SetText("+")
 		add:SetTooltip("Пополнение счета")

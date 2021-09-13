@@ -20,16 +20,15 @@ local function getBottomText(ITEM, bShowDiscounted)
 	end
 end
 
-
 local font_exists
 function PANEL:Init()
-	self:SetSize(180,70)
+	self:SetSize(190,80)
 
 	if !font_exists then
 		surface.CreateFont("roboto_15",{
 			font     = "roboto",
 			extended = true,
-			size     = 15,
+			size     = 17,
 		})
 
 		surface.CreateFont("roboto_20",{
@@ -61,6 +60,9 @@ function PANEL:SetName(sName)
 
 	self.name = self.name or uigs.Create("DLabel", function(lbl)
 		lbl:SetTall(20)
+		lbl:DockMargin(5, 5, 5, 5)
+		lbl:Dock(TOP)
+		lbl:SetContentAlignment(5)
 		lbl:SetFont("roboto_20")
 		lbl:SetTextColor(self.title_color or IGS.col.TEXT_HARD)
 	end, self)
@@ -73,6 +75,9 @@ end
 function PANEL:SetSign(sSignature)
 	self.sign = self.sign or uigs.Create("DLabel", function(lbl)
 		lbl:SetTall(15)
+		lbl:DockMargin(5, 2, 5, 5)
+		lbl:Dock(TOP)
+		lbl:SetContentAlignment(5)
 		lbl:SetFont("roboto_15")
 		lbl:SetTextColor(IGS.col.TEXT_SOFT)
 	end, self)
@@ -88,6 +93,8 @@ function PANEL:SetBottomText(sBottomText)
 		lbl:SetFont("roboto_15")
 		lbl:SetTextColor(IGS.col.TEXT_SOFT)
 		lbl:SetContentAlignment(5)
+		lbl:Dock(BOTTOM)
+		lbl:DockMargin(4, 4, 4, 4)
 		-- lbl:SetWrap(true)
 		-- lbl:SetAutoStretchVertical(true)
 	end, self)
@@ -191,7 +198,7 @@ function PANEL:Paint(w,h)
 		local bx,by = self.bottom:GetPos()
 
 		surface.SetDrawColor( IGS.col.HARD_LINE )
-		surface.DrawLine(bx + 5,by - 2,bx + self.bottom:GetWide() - 10,by - 2)
+		surface.DrawLine(bx + 5,by - 7,bx + self.bottom:GetWide() - 10,by - 7)
 	end
 
 	return true

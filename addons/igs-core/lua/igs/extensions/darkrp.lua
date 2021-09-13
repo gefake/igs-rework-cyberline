@@ -71,6 +71,7 @@ end)
 hook.Add("playerCanChangeTeam", "IGS", function(pl, iTeam, bForce)
 	local TEAM = RPExtraTeams[iTeam]
 	local ITEM = IGS.PlayerHasOneOf(pl, IGS.ITEMS.DRP.JOBS[TEAM.command])
+	print(ITEM)
 	if ITEM ~= nil then -- донатный итем
 		local allow, message = hook.Run("IGS.playerCanChangeTeam", pl, iTeam, bForce)
 		return allow or tobool(ITEM), message or "Это для донатеров (/donate)"

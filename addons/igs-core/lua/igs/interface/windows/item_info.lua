@@ -6,7 +6,7 @@ local function purchase(ITEM, buy_button)
 
 		if errMsg then
 			IGS.ShowNotify(errMsg, "Ошибка покупки")
-			surface.PlaySound("ambient/voices/citizen_beaten1.wav") -- еще есть
+			-- surface.PlaySound("ambient/voices/citizen_beaten1.wav") -- еще есть
 			return
 		end
 
@@ -139,17 +139,17 @@ function IGS.WIN.Item(uid)
 			buy:SetText("Купить за " .. PL_IGS(cur_price))
 			buy:SetEnabled( IGS.CanAfford(LocalPlayer(), cur_price) )
 			buy.DoClick = function(s)
-				if not s:IsEnabled() then
+				if not IGS.CanAfford(LocalPlayer(), cur_price) then
 					local need = cur_price - LocalPlayer():IGSFunds()
 
-					surface.PlaySound("ambient/voices/citizen_beaten1.wav") -- еще есть
+					-- surface.PlaySound("ambient/voices/citizen_beaten1.wav") -- еще есть
 					IGS.BoolRequest(
 						"Недостаточно денег",
 						("Вам не хватает %s для покупки %s.\nЖелаете мгновенно пополнить счет?"):format( PL_IGS(need), ITEM:Name()),
 						function(yes)
 							if yes then
 								IGS.WIN.Deposit(IGS.RealPrice(need), true)
-								surface.PlaySound("vo/npc/male01/yeah02.wav")
+								-- surface.PlaySound("vo/npc/male01/yeah02.wav")
 							end
 						end
 					):ShowCloseButton(true)

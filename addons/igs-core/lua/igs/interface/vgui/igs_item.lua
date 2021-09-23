@@ -56,7 +56,7 @@ function PANEL:SetItem(STORE_ITEM)
 end
 
 function PANEL:SetName(sName)
-	if self.item:ShortDescription() and self.item:ShortDescription() ~= "" then
+	if self.item and self.item:ShortDescription() and self.item:ShortDescription() ~= "" then
 		(self.icon or self):SetCooltip((self.item:ShortDescription():gsub("\n\n","\n") or ""))
 	end
 

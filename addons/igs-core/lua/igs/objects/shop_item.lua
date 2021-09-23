@@ -61,7 +61,7 @@ function STORE_ITEM:Description()
 end
 
 function STORE_ITEM:SetShortDescription(sDesc, bAppend)
-	return set(self,"description",bAppend and (self:ShortDescription() .. sDesc) or sDesc)
+	return set(self,"shortdescription",bAppend and (self:ShortDescription() .. sDesc) or sDesc)
 end
 
 function STORE_ITEM:ShortDescription()

@@ -83,6 +83,17 @@ function STORE_ITEM:ICON()
 	end
 end
 
+-- Иконка из материалов
+function STORE_ITEM:SetMaterialIcon(mIcon)
+	return CLIENT and set(self, "maticon", mIcon) or self
+end
+
+function STORE_ITEM:MATICON()
+	if self.maticon then
+		return self.maticon
+	end
+end
+
 -- Цвет подсветки заголовка итема в списке
 function STORE_ITEM:SetHighlightColor(color)
 	return CLIENT and set(self,"highlight",color) or self

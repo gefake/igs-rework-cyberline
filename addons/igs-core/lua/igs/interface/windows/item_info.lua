@@ -137,7 +137,6 @@ function IGS.WIN.Item(uid)
 			buy:SetStartColor(Color(50, 163, 101))
 			buy:SetEndColor(Color(68, 196, 157))
 			buy:SetText("Купить за " .. PL_IGS(cur_price))
-			buy:SetEnabled( IGS.CanAfford(LocalPlayer(), cur_price) )
 			buy.DoClick = function(s)
 				if not IGS.CanAfford(LocalPlayer(), cur_price) then
 					local need = cur_price - LocalPlayer():IGSFunds()

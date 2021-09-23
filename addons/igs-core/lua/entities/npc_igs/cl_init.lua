@@ -24,25 +24,20 @@ local function textPlate(text,y)
 	surface.DrawText(text)
 end
 
-local function drawInfo(ent, text, dist)
-	cam.Start3D2D(pos + self:GetUp() * 90, Angle(0, eyeAngle.y - 90, 90), 0.04)
-		XeninUI:DrawNPCOverhead(self, {
-			alpha = alpha,
-			text = "Донат",
-			-- icon = XeninInventory.Config.NPCIcon,
-			sin = true,
-			textOffset = -20,
-			iconMargin = 50,
-			color = BATTLEPASS.Config.NPC.OutlineColor
-		})
-	cam.End3D2D()
-end
-
--- https://vk.com/gim143836547?msgid=46147&q=рендер&sel=88943099
-IGS_NPC_HIDE_ON_DISTANCE = nil -- 100000
 function ENT:Draw()
-	local dist = EyePos():DistToSqr(self:GetPos())
-	if IGS_NPC_HIDE_ON_DISTANCE and dist > IGS_NPC_HIDE_ON_DISTANCE then return end -- не отрисовывать
+	local ply = LocalPlayer()
+	local pos = self:GetPos()
+	local eyePos = ply:GetPos()
+	local dist = pos:Distance(eyePos)
+	local alpha = math.Clamp(2500 - dist * 2.7, 0, 255)
+  
+	if (alpha <= 0) then return end
+  
+	local angle = self:GetAngles()
+	local eyeAngle = ply:EyeAngles()
+  
+	angle:RotateAroundAxis(angle:Forward(), 90)
+	angle:RotateAroundAxis(angle:Right(), - 90)
 
 	cam.Start3D2D(pos + self:GetUp() * 90, Angle(0, eyeAngle.y - 90, 90), 0.04)
 		XeninUI:DrawNPCOverhead(self, {

@@ -18,7 +18,7 @@ local function purchase(ITEM, buy_button)
 			buy_button:SetText("Куплено " .. buy_button.purchased .. " шт")
 		else
 			if IsValid(m) then
-				m:Close()
+				m:Remove()
 			end
 
 			if !IGS.C.Inv_Enabled then
@@ -78,9 +78,10 @@ function IGS.WIN.Item(uid)
 
 	surface.PlaySound("ambient/weather/rain_drip1.wav")
 
-	m = uigs.Create("igs_frame", function(self)
-		self:SetSize(330,550)
-		self:RememberLocation("igs_item")
+	m = uigs.Create("XeninUI.Frame", function(self)
+		self:SetSize(410,550)
+		-- self:RememberLocation("igs_item")
+		self:Center()
 		self:MakePopup()
 		self:SetTitle(ITEM:Name())
 
@@ -117,7 +118,7 @@ function IGS.WIN.Item(uid)
 
 		p:Dock(FILL)
 		p:SetIcon(ITEM:ICON())
-		p:SetName("Действует " .. IGS.TermToStr(ITEM:Term()))
+		-- p:SetName("Действует " .. IGS.TermToStr(ITEM:Term()))
 		p:SetImage(ITEM:IMG())
 		p:SetSubNameButton(ITEM:Group() and ITEM:Group():Name(), function()
 			IGS.WIN.Group(ITEM:Group():UID())
@@ -126,15 +127,19 @@ function IGS.WIN.Item(uid)
 		p:SetInfo(IGS.FormItemInfo(ITEM))
 
 		m.act = p:CreateActivity() -- панелька для кастом эллементов
-		m.buy = uigs.Create("igs_button", function(buy)
+		m.buy = uigs.Create("XeninUI.ButtonV2", function(buy)
 			local cur_price = ITEM:PriceInCurrency()
 
 			buy:Dock(TOP)
-			buy:SetTall(20)
-			buy:SetText( "Купить за " .. PL_IGS(cur_price) )
-			buy:SetActive( IGS.CanAfford(LocalPlayer(), cur_price) )
+			buy:SetRoundness(4)
+			buy:SetTall(90)
+			buy:SetSolidColor(Color(49, 160, 99))
+			buy:SetStartColor(Color(50, 163, 101))
+			buy:SetEndColor(Color(68, 196, 157))
+			buy:SetText("Купить за " .. PL_IGS(cur_price))
+			buy:SetEnabled( IGS.CanAfford(LocalPlayer(), cur_price) )
 			buy.DoClick = function(s)
-				if !s:IsActive() then
+				if not s:IsEnabled() then
 					local need = cur_price - LocalPlayer():IGSFunds()
 
 					surface.PlaySound("ambient/voices/citizen_beaten1.wav") -- еще есть

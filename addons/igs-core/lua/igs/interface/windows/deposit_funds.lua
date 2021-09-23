@@ -13,15 +13,15 @@ function IGS.WIN.Deposit(iRealSum)
 	local cd = !IGS.IsCurrencyEnabled() -- cd = currency disabled. Bool
 	local realSum = math.max(IGS.GetMinCharge(), niceSum(iRealSum, 0))
 
-	m = uigs.Create("igs_frame", function(self)
+	m = uigs.Create("XeninUI.Frame", function(self)
 		self:SetSize(450,400)
-		self:RememberLocation("igs_deposit")
 
 		-- Вы, конечно, можете удалить наш копирайт. Чтобы вы не перенапряглись, я даже подготовил чуть ниже строчку для этого
 		-- Но прежде, чем ты это сделаешь, ответь себе на вопрос. Нахуя? Так мешает?
 		self:SetTitle("Автодонат от gm-donate.ru")
 		-- self:SetTitle("Владелец этого сервера мразь, не ценящая чужой труд")
 
+		self:Center()
 		self:MakePopup()
 		-- self:Focus()
 		-- self:SetBackgroundBlur(false)
@@ -29,31 +29,31 @@ function IGS.WIN.Deposit(iRealSum)
 		--[[-------------------------------------
 			Левая колонка. Реальная валюта
 		---------------------------------------]]
-		uigs.Create("DLabel", function(real)
-			real:SetSize(cd and 450 or 180,25)
-			real:SetPos(cd and 0 or 10,self:GetTitleHeight())
-			real:SetText(cd and "Введите ниже сумму пополнения счета" or "Эфир")
-			real:SetFont("igs.22")
-			real:SetTextColor(IGS.col.HIGHLIGHTING)
-			real:SetContentAlignment(2)
-		end, self)
+		-- uigs.Create("DLabel", function(real)
+		-- 	real:SetSize(cd and 450 or 180,25)
+		-- 	real:SetPos(cd and 0 or 10, 40)
+		-- 	real:SetText(cd and "Введите ниже сумму пополнения счета" or "Эфир")
+		-- 	real:SetFont("igs.22")
+		-- 	real:SetTextColor(IGS.col.HIGHLIGHTING)
+		-- 	real:SetContentAlignment(2)
+		-- end, self)
 
-		self.real_m = uigs.Create("DTextEntry", self)
+		self.real_m = uigs.Create("XeninUI.TextEntry", self)
 		self.real_m:SetPos(10,50)
 		self.real_m:SetSize(cd and 450 - 10 - 10 or 180,30)
 		self.real_m:SetNumeric(true)
 		self.real_m.OnChange = function(s)
 			if cd then return end
-			self.curr_m:SetValue(IGS.PriceInCurrency( niceSum(s:GetValue(),0) )) -- бля
+			self:SetText(IGS.PriceInCurrency( niceSum(s:GetText(),0) )) -- бля
 		end
 		self.real_m.Think = function()
-			local rub = tonumber(self.real_m:GetValue())
+			local rub = tonumber(self.real_m:GetText())
 			if cd then
 				self.purchase:SetText(
 					"Пополнить счет на " .. niceSum(rub,0) .. " руб"
 				)
 			else
-				local igs = tonumber(self.curr_m:GetValue())
+				local igs = tonumber(self:GetText())
 				self.purchase:SetText(
 					"Пополнить на " .. IGS.SignPrice( niceSum(igs,0) ) ..
 					" за " .. niceSum(rub,0) .. " руб"
@@ -82,10 +82,10 @@ function IGS.WIN.Deposit(iRealSum)
 
 			p:SetSize(400,40)
 			p:SetActive(true) -- выделяет синим
-			p:SetPos((self:GetWide() - p:GetWide()) / 2,ry + self.real_m:GetTall() + 10)
+			p:SetPos((self:GetWide() - p:GetWide()) / 2,ry + self.real_m:GetTall() + 15)
 
 			p.DoClick = function()
-				local want_money = niceSum(self.real_m:GetValue())
+				local want_money = niceSum(self.real_m:GetText())
 				if !want_money then
 					self.log:AddRecord("Указана некорректная сумма пополнения", false)
 					return
@@ -122,19 +122,19 @@ function IGS.WIN.Deposit(iRealSum)
 				curr:SetContentAlignment(2)
 			end, self)
 
-			self.curr_m = uigs.Create("DTextEntry", self)
-			self.curr_m:SetPos(self:GetWide() - 10 - self.real_m:GetWide(),50)
-			self.curr_m:SetSize(self.real_m:GetWide(),self.real_m:GetTall())
-			self.curr_m:SetNumeric(true)
-			self.curr_m.OnChange = function(s)
-				self.real_m:SetValue(IGS.RealPrice( niceSum(s:GetValue(),0) )) -- тоже бля
+			self = uigs.Create("DTextEntry", self)
+			self:SetPos(self:GetWide() - 10 - self.real_m:GetWide(),50)
+			self:SetSize(self.real_m:GetWide(),self.real_m:GetTall())
+			self:SetNumeric(true)
+			self.OnValueChanged = function(s)
+				self.real_m:SetText(IGS.RealPrice( niceSum(s:GetText(),0) )) -- тоже бля
 			end
 		end
 
 		--[[-------------------------------------------------------------------------
-			Должно быть после self.curr_m
+			Должно быть после self
 		---------------------------------------------------------------------------]]
-		self.real_m:SetValue( realSum )
+		self.real_m:SetText( realSum )
 		self.real_m:OnChange()
 
 
@@ -231,7 +231,7 @@ function IGS.WIN.Deposit(iRealSum)
 			end)
 		end
 
-		log(0,"Открыт диалог пополнения счета",nil)
+		log(0,"Открыт диалог пополнения счета. Пополняя счёт, ты автоматически соглашаешься с нашей офертой по ссылке\nhttp://bit.ly/voidline-don",nil)
 		log(math.random(3),"Соединение установлено!",true) -- пустышка, которая добавляет чувство безопасностти сделке
 		log(math.random(20,40),"Деньги будут зачислены мгновенно и автоматически",nil)
 	end)

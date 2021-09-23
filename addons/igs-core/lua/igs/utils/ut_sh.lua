@@ -142,7 +142,7 @@ function IGS.FormItemInfo(ITEM)
 		["Действует"] = IGS.TermToStr(ITEM:Term()),
 		["Цена"]       = PL_MONEY(ITEM:Price()),
 		["Без скидки"] = ITEM.discounted_from and PL_MONEY(ITEM.discounted_from) or nil,
-		["Покупки суммируются"]  = ITEM:IsStackable() and "да" or "нет",
+		["Суммируются"]  = ITEM:IsStackable() and "да" or "нет",
 	}
 end
 

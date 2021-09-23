@@ -19,7 +19,7 @@ function PANEL:SetName(sName)
 	self.name = self.name or uigs.Create("DLabel", function(lbl)
 		lbl:Dock(TOP)
 		--lbl:SetTall(22)
-		lbl:SetFont("igs.22")
+		lbl:SetFont("BATTLEPASS_Item_Completed")
 		lbl:SetTextColor(IGS.col.TEXT_HARD)
 		lbl:SetWrap(true)
 		lbl:SetAutoStretchVertical(true)
@@ -87,8 +87,8 @@ function PANEL:SetSubNameButton(sName,func)
 
 	self.sub = self.sub or uigs.Create("DButton", function(btn)
 		btn:Dock(TOP)
-		btn:SetTall(20)
-		btn:SetFont("igs.20")
+		btn:SetTall(40)
+		btn:SetFont("BATTLEPASS_Item_Completed")
 		btn:SetTextColor(IGS.col.TEXT_SOFT)
 		btn:SetContentAlignment(4)
 		btn.DoClick = func
@@ -123,13 +123,12 @@ function PANEL:AddPanel(sTitle,panel)
 
 	uigs.Create("DLabel", function(title)
 		title:Dock(TOP)
-		title:SetTall(22)
+		title:SetTall(32)
 		title:DockMargin(0,10,0,5)
 		title:SetText(sTitle)
-		title:SetFont("igs.22")
+		title:SetFont("BATTLEPASS_Item_Completed")
 		title:SetTextColor(IGS.col.TEXT_HARD)
-
-		y = y + 22 + 5 + 5
+		y = y + 32 + 5 + 5
 	end, background)
 
 	panel:SetParent(background)
@@ -169,18 +168,18 @@ function PANEL:SetDescription(sDescription)
 
 	self:InvalidateParent(true)
 	local w = self:GetWide()
-	local txt = string.Wrap("igs.15", sDescription, w - 10 - 10)
+	local txt = string.Wrap("BATTLEPASS_Item_Completed", sDescription, w - 10 - 10)
 	local y   = 0
 
 	for _,line in ipairs(txt) do
 		uigs.Create("DLabel", function(d)
 			d:SetPos(0,y)
-			d:SetSize(w,15)
-			d:SetFont("igs.15")
+			d:SetSize(w,20)
+			d:SetFont("BATTLEPASS_Item_Completed")
 			d:SetTextColor(IGS.col.TEXT_SOFT)
 			d:SetText(line)
 
-			y = y + 15
+			y = y + 20
 		end, pnl)
 	end
 
@@ -194,27 +193,27 @@ function PANEL:SetInfo(tInf)
 
 	for k,v in pairs(tInf) do
 		local line_bg = uigs.Create("Panel", pnl)
-		line_bg:SetTall(15)
+		line_bg:SetTall(20)
 		line_bg:Dock(TOP)
 
 		uigs.Create("DLabel", function(key)
 			key:Dock(LEFT)
-			key:SetWide(80)
-			key:SetFont("igs.15")
+			key:SetWide(150)
+			key:SetFont("BATTLEPASS_Item_Completed")
 			key:SetTextColor(IGS.col.TEXT_SOFT)
 			key:SetText(k)
-			key:SetContentAlignment(6)
+			key:SetContentAlignment(4)
 		end, line_bg)
 
 		uigs.Create("DLabel", function(key)
 			key:Dock(FILL)
-			key:SetFont("igs.15")
+			key:SetFont("BATTLEPASS_Item_Completed")
 			key:SetTextColor(IGS.col.TEXT_HARD)
 			key:SetText("  " .. v)
 			key:SetContentAlignment(4)
 		end, line_bg)
 
-		y = y + 15
+		y = y + 20
 	end
 
 	pnl:SetTall(y)

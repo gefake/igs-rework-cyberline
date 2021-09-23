@@ -42,7 +42,7 @@ function PANEL:Paint(w,h)
 		self:RenderTexture()
 
 	elseif self:GetTexture() then
-		surface.SetDrawColor(IGS.col.ICON)
+		surface.SetDrawColor(Color(255, 255, 255))
 		surface.SetMaterial( self:GetTexture() )
 		surface.DrawTexturedRect(0,0,w,h)
 	end

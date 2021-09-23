@@ -50,4 +50,6 @@ function ENT:Draw()
 		color = BATTLEPASS.Config.NPC.OutlineColor
 		})
 	cam.End3D2D()
+
+	self:DrawModel()
 end

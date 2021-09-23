@@ -64,108 +64,110 @@ function IGS.UI()
 		return
 	end
 
-	mf = uigs.Create("igs_frame", function(self)
-		-- 580 = (items_in_line * item_pan_wide) + (10(margin) * (items_in_line + 1))
-		self:SetSize(math.min(ScrW(), 900), math.min(ScrH(), 500)) -- позволяет закрыть окно на ущербных разрешениях
-		self:RememberLocation("igs")
-		self:MakePopup()
+	RunConsoleCommand("igsdonate")
 
-		-- если повесить на фрейм, то драг сломается
-		local init = CurTime() -- https://t.me/c/1353676159/7185
-		function self.btnClose:Think()
-			if CurTime() - init > 1 and input.IsKeyDown(IGS.C.MENUBUTTON) then
-				IGS.HideUI()
-			end
-		end
-	end)
+	-- mf = uigs.Create("igs_frame", function(self)
+	-- 	-- 580 = (items_in_line * item_pan_wide) + (10(margin) * (items_in_line + 1))
+	-- 	self:SetSize(math.min(ScrW(), 900), math.min(ScrH(), 500)) -- позволяет закрыть окно на ущербных разрешениях
+	-- 	self:RememberLocation("igs")
+	-- 	self:MakePopup()
 
-	-- Баланс
-	uigs.Create("igs_button", function(self)
-		function self:UPDBalance()
-			self.bal = LocalPlayer():IGSFunds()
-			self:SetText("Баланс: " .. IGS.SignPrice(self.bal))
-		end
+	-- 	-- если повесить на фрейм, то драг сломается
+	-- 	local init = CurTime() -- https://t.me/c/1353676159/7185
+	-- 	function self.btnClose:Think()
+	-- 		if CurTime() - init > 1 and input.IsKeyDown(IGS.C.MENUBUTTON) then
+	-- 			IGS.HideUI()
+	-- 		end
+	-- 	end
+	-- end)
 
-		self:SetPos(20,0)
-		self:SetSize(250,27)
-		self:UPDBalance()
-		self:SetCooltip("Открыть список покупок")
-		self.Think = function(s)
-			if s.bal ~= LocalPlayer():IGSFunds() then
-				s:UPDBalance()
-			end
-		end
+	-- -- Баланс
+	-- uigs.Create("igs_button", function(self)
+	-- 	function self:UPDBalance()
+	-- 		self.bal = LocalPlayer():IGSFunds()
+	-- 		self:SetText("Баланс: " .. IGS.SignPrice(self.bal))
+	-- 	end
 
-		local add = uigs.Create("igs_button", mf)
-		add:SetPos(250,0)
-		add:SetSize(27,27)
-		add:SetText("+")
-		add:SetCooltip("Пополнение счета")
-		add:SetActive(true)
+	-- 	self:SetPos(20,0)
+	-- 	self:SetSize(250,27)
+	-- 	self:UPDBalance()
+	-- 	self:SetCooltip("Открыть список покупок")
+	-- 	self.Think = function(s)
+	-- 		if s.bal ~= LocalPlayer():IGSFunds() then
+	-- 			s:UPDBalance()
+	-- 		end
+	-- 	end
 
-		 add.DoClick = dep
-		self.DoClick = dep
-	end,mf)
+	-- 	local add = uigs.Create("igs_button", mf)
+	-- 	add:SetPos(250,0)
+	-- 	add:SetSize(27,27)
+	-- 	add:SetText("+")
+	-- 	add:SetCooltip("Пополнение счета")
+	-- 	add:SetActive(true)
 
-	mf.activity = uigs.Create("igs_tabbar", function(self)
-		self:SetPos(0,mf:GetTitleHeight())
-		self:SetSize(612,mf:GetTall() - mf:GetTitleHeight())
-	end, mf)
+	-- 	 add.DoClick = dep
+	-- 	self.DoClick = dep
+	-- end,mf)
 
-	-- Херня справа от лэйаута с услугами http://joxi.ru/52aQQ8Efzov120
-	-- Вид без нее: http://joxi.ru/eAO44lGcXORlro
-	local x,y = mf.activity:GetPos()
-	mf.sidebar = uigs.Create("igs_sidebar", mf)
-	mf.sidebar:SetSize(mf:GetWide() - mf.activity:GetWide(), mf.activity:GetTall() + 1 + 1)
-	mf.sidebar:SetPos(x + mf.activity:GetWide(),y - 1) -- -1 чтобы перекрыть подчеркивание хэдера
-	mf.sidebar.PaintOver = function(_,_,h)
-		surface.SetDrawColor(IGS.col.HARD_LINE)
-		surface.DrawLine(0,0,0,h) -- линия слева
-	end
-	mf.sidebar.header.Paint = function(_,w,h)
-		draw.RoundedBox(0,0,0,w,h,IGS.col.FRAME_HEADER)
+	-- mf.activity = uigs.Create("igs_tabbar", function(self)
+	-- 	self:SetPos(0,mf:GetTitleHeight())
+	-- 	self:SetSize(612,mf:GetTall() - mf:GetTitleHeight())
+	-- end, mf)
 
-		surface.SetDrawColor(IGS.col.HARD_LINE)
-		surface.DrawLine(0,h - 1,w,h - 1)
-	end
+	-- -- Херня справа от лэйаута с услугами http://joxi.ru/52aQQ8Efzov120
+	-- -- Вид без нее: http://joxi.ru/eAO44lGcXORlro
+	-- local x,y = mf.activity:GetPos()
+	-- mf.sidebar = uigs.Create("igs_sidebar", mf)
+	-- mf.sidebar:SetSize(mf:GetWide() - mf.activity:GetWide(), mf.activity:GetTall() + 1 + 1)
+	-- mf.sidebar:SetPos(x + mf.activity:GetWide(),y - 1) -- -1 чтобы перекрыть подчеркивание хэдера
+	-- mf.sidebar.PaintOver = function(_,_,h)
+	-- 	surface.SetDrawColor(IGS.col.HARD_LINE)
+	-- 	surface.DrawLine(0,0,0,h) -- линия слева
+	-- end
+	-- mf.sidebar.header.Paint = function(_,w,h)
+	-- 	draw.RoundedBox(0,0,0,w,h,IGS.col.FRAME_HEADER)
 
-	mf.sidebar.activity = uigs.Create("igs_multipanel", mf.sidebar.sidebar)
-	mf.sidebar.activity:Dock(FILL)
+	-- 	surface.SetDrawColor(IGS.col.HARD_LINE)
+	-- 	surface.DrawLine(0,h - 1,w,h - 1)
+	-- end
 
-	function mf.sidebar:AddPanel(panel,active)
-		return self.activity:AddPanel(panel,active)
-	end
+	-- mf.sidebar.activity = uigs.Create("igs_multipanel", mf.sidebar.sidebar)
+	-- mf.sidebar.activity:Dock(FILL)
 
-	function mf.sidebar:Show(iPanelID)
-		return self.activity:SetActivePanel(iPanelID)
-	end
+	-- function mf.sidebar:AddPanel(panel,active)
+	-- 	return self.activity:AddPanel(panel,active)
+	-- end
 
-	function mf.sidebar:AddPage(sTitle)
-		return uigs.Create("Panel", function(bg)
-			bg.side = uigs.Create("igs_scroll")
+	-- function mf.sidebar:Show(iPanelID)
+	-- 	return self.activity:SetActivePanel(iPanelID)
+	-- end
 
-			bg.SidePanelID = self:AddPanel(bg.side)
-			bg.side:SetSize(self:GetSize()) -- если указать раньше, то сбросится
-			bg.OnOpen = function(s)
-				self:SetTitle(sTitle)
-				self:Show(s.SidePanelID)
+	-- function mf.sidebar:AddPage(sTitle)
+	-- 	return uigs.Create("Panel", function(bg)
+	-- 		bg.side = uigs.Create("igs_scroll")
 
-				-- Не знаю как сделать лучше.
-				-- ЧТобы не оверрайдить полностью - сделал дополнительный метод
-				if bg.OnOpenOver then
-					bg.OnOpenOver()
-				end
-			end
-		end, self)
-	end
+	-- 		bg.SidePanelID = self:AddPanel(bg.side)
+	-- 		bg.side:SetSize(self:GetSize()) -- если указать раньше, то сбросится
+	-- 		bg.OnOpen = function(s)
+	-- 			self:SetTitle(sTitle)
+	-- 			self:Show(s.SidePanelID)
 
-	-- Немного не правильно, но эта штука отключает
-	for hook_name in pairs(IGS.C.DisabledFrames) do
-		hook.Remove("IGS.CatchActivities",hook_name)
-	end
+	-- 			-- Не знаю как сделать лучше.
+	-- 			-- ЧТобы не оверрайдить полностью - сделал дополнительный метод
+	-- 			if bg.OnOpenOver then
+	-- 				bg.OnOpenOver()
+	-- 			end
+	-- 		end
+	-- 	end, self)
+	-- end
 
-	-- Собираем кнопочки в футере
-	hook.Run("IGS.CatchActivities",mf.activity,mf.sidebar)
+	-- -- Немного не правильно, но эта штука отключает
+	-- for hook_name in pairs(IGS.C.DisabledFrames) do
+	-- 	hook.Remove("IGS.CatchActivities",hook_name)
+	-- end
+
+	-- -- Собираем кнопочки в футере
+	-- hook.Run("IGS.CatchActivities",mf.activity,mf.sidebar)
 
 	return mf
 end

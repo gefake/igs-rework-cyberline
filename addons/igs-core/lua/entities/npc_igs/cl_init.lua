@@ -25,22 +25,17 @@ local function textPlate(text,y)
 end
 
 local function drawInfo(ent, text, dist)
-	dist = dist or EyePos():DistToSqr(ent:GetPos())
-
-	if dist < 60000 then
-		surface.SetAlphaMultiplier( math.Clamp(3 - (dist / 20000), 0, 1) )
-
-		local _,max = ent:GetRotatedAABB(ent:OBBMins(), ent:OBBMaxs() )
-		local rot = (ent:GetPos() - EyePos()):Angle().yaw - 90
-		local sin = math.sin(CurTime() + ent:EntIndex()) / 3 + .5 -- EntIndex дает разницу в движении
-		local center = ent:LocalToWorld(ent:OBBCenter())
-
-		cam.Start3D2D(center + Vector(0, 0, math.abs(max.z / 2) + 12 + sin), Angle(0, rot, 90), 0.13)
-			textPlate(text,15)
-		cam.End3D2D()
-
-		surface.SetAlphaMultiplier(1)
-	end
+	cam.Start3D2D(pos + self:GetUp() * 90, Angle(0, eyeAngle.y - 90, 90), 0.04)
+		XeninUI:DrawNPCOverhead(self, {
+			alpha = alpha,
+			text = "Донат",
+			-- icon = XeninInventory.Config.NPCIcon,
+			sin = true,
+			textOffset = -20,
+			iconMargin = 50,
+			color = BATTLEPASS.Config.NPC.OutlineColor
+		})
+	cam.End3D2D()
 end
 
 -- https://vk.com/gim143836547?msgid=46147&q=рендер&sel=88943099
@@ -49,6 +44,17 @@ function ENT:Draw()
 	local dist = EyePos():DistToSqr(self:GetPos())
 	if IGS_NPC_HIDE_ON_DISTANCE and dist > IGS_NPC_HIDE_ON_DISTANCE then return end -- не отрисовывать
 
-	self:DrawModel()
+	cam.Start3D2D(pos + self:GetUp() * 90, Angle(0, eyeAngle.y - 90, 90), 0.04)
+		XeninUI:DrawNPCOverhead(self, {
+		alpha = alpha,
+		text = "Донат",
+		-- icon = XeninInventory.Config.NPCIcon,
+		sin = true,
+		textOffset = -20,
+		iconMargin = 50,
+		color = BATTLEPASS.Config.NPC.OutlineColor
+		})
+	cam.End3D2D()
+
 	drawInfo(self, "Донат услуги", dist)
 end

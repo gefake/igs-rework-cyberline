@@ -63,7 +63,7 @@ hook.Add("IGS.CatchActivities","purchases",function(activity,sidebar)
 					sName,
 					IGS.TimestampToDate(v.purchase) or "Никогда",
 					IGS.TimestampToDate(v.expire)   or "Никогда"
-				):SetTooltip("Имя сервера: " .. sv_name .. "\nID в системе: " .. v.id .. "\nОригинальное название: " .. v.item)
+				):SetCooltip("Имя сервера: " .. sv_name .. "\nID в системе: " .. v.id .. "\nОригинальное название: " .. v.item)
 			end
 		end)
 	end, bg)

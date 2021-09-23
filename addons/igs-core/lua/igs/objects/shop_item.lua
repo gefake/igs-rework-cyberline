@@ -60,6 +60,14 @@ function STORE_ITEM:Description()
 	return self.description
 end
 
+function STORE_ITEM:SetShortDescription(sDesc, bAppend)
+	return set(self,"description",bAppend and (self:ShortDescription() .. sDesc) or sDesc)
+end
+
+function STORE_ITEM:ShortDescription()
+	return self.shortdescription
+end
+
 -- Ссылка на картинку иконки товара 1:1. Желательно минимум 100 px
 -- Или же путь к модельке, но тогда вторым аргументом указать true
 function STORE_ITEM:SetIcon(sIcon, bIsModel)
@@ -331,6 +339,7 @@ function IGS.AddItem(sName,sUID,iPrice)
 		name = sName,
 		uid  = sUID:lower(),
 		id   = IGS.ITEMS.count,
+		shortdescription = "",
 		description = "",
 		termin = 0 -- если не изменить, то услуга не добавится в покупки. Только в транзакции
 	}, STORE_ITEM)

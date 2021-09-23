@@ -48,7 +48,7 @@ function IGS.WIN.InvLog()
 
 		function bg:AddLine(sOwner, sInfli, sItem, sAction, sDate, r)
 			local line = bg.table:AddLine(sOwner, sInfli, sItem, r.gift_id, sAction, sDate)
-			line:SetTooltip("ID операции: " .. r.action_id)
+			line:SetCooltip("ID операции: " .. r.action_id)
 			for _,v in ipairs(line.columns) do
 				v:SetCursor("hand")
 			end

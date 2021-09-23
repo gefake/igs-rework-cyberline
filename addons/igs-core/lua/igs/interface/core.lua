@@ -66,7 +66,7 @@ function IGS.UI()
 
 	mf = uigs.Create("igs_frame", function(self)
 		-- 580 = (items_in_line * item_pan_wide) + (10(margin) * (items_in_line + 1))
-		self:SetSize(math.min(ScrW(), 800), math.min(ScrH(), 500)) -- позволяет закрыть окно на ущербных разрешениях
+		self:SetSize(math.min(ScrW(), 900), math.min(ScrH(), 500)) -- позволяет закрыть окно на ущербных разрешениях
 		self:RememberLocation("igs")
 		self:MakePopup()
 
@@ -89,7 +89,7 @@ function IGS.UI()
 		self:SetPos(20,0)
 		self:SetSize(250,27)
 		self:UPDBalance()
-		self:SetTooltip("Открыть список покупок")
+		self:SetCooltip("Открыть список покупок")
 		self.Think = function(s)
 			if s.bal ~= LocalPlayer():IGSFunds() then
 				s:UPDBalance()
@@ -100,7 +100,7 @@ function IGS.UI()
 		add:SetPos(250,0)
 		add:SetSize(27,27)
 		add:SetText("+")
-		add:SetTooltip("Пополнение счета")
+		add:SetCooltip("Пополнение счета")
 		add:SetActive(true)
 
 		 add.DoClick = dep
@@ -109,7 +109,7 @@ function IGS.UI()
 
 	mf.activity = uigs.Create("igs_tabbar", function(self)
 		self:SetPos(0,mf:GetTitleHeight())
-		self:SetSize(580,mf:GetTall() - mf:GetTitleHeight())
+		self:SetSize(612,mf:GetTall() - mf:GetTitleHeight())
 	end, mf)
 
 	-- Херня справа от лэйаута с услугами http://joxi.ru/52aQQ8Efzov120

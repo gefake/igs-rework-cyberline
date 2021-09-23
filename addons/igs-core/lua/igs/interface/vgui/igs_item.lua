@@ -56,7 +56,9 @@ function PANEL:SetItem(STORE_ITEM)
 end
 
 function PANEL:SetName(sName)
-	(self.icon or self):SetTooltip(sName .. (self.item and "\n\n" .. self.item:Description():gsub("\n\n","\n") or ""))
+	if self.item:ShortDescription() and self.item:ShortDescription() ~= "" then
+		(self.icon or self):SetCooltip((self.item:ShortDescription():gsub("\n\n","\n") or ""))
+	end
 
 	self.name = self.name or uigs.Create("DLabel", function(lbl)
 		lbl:SetTall(20)

@@ -170,7 +170,7 @@ function IGS.SignPrice(iPrice) -- 10 Alc
 	return math.Truncate(tonumber(iPrice),2) .. " " .. IGS.C.CURRENCY_SIGN
 end
 
-local rubs = {"рубль", "рубля", "рублей"}
+local rubs = {"эфир", "эфир", "эфир"}
 PL_MONEY = PL.Add("realmoney",rubs)
 PL_IGS   = PL.Add("igs_currency",IGS.C.CurrencyPlurals or rubs)
 PL_DAYS  = PL.Add("days",{"день", "дня", "дней"})

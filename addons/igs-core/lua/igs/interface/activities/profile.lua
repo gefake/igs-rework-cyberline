@@ -141,7 +141,7 @@ hook.Add("IGS.CatchActivities","profile",function(activity,sidebar)
 					math.Truncate(mybal,2), -- не представляю как, но временами получались очень большие копейки
 					note,
 					IGS.TimestampToDate(v.date,true)
-				):SetTooltip(("%s\n\nID транзакции в системе: %i%s"):format(
+				):SetCooltip(("%s\n\nID транзакции в системе: %i%s"):format(
 					note,
 					v.id,
 					note ~= v.note and ("\nОригинальная отметка: " .. v.note) or ""

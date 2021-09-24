@@ -1,18 +1,17 @@
 function IGS.BoolRequest(title, text, cback)
-	local m = uigs.Create("igs_frame", function(self)
+	local m = uigs.Create("XeninUI.Frame", function(self)
 		self:SetTitle(title)
-		self:ShowCloseButton(false)
-		self:SetWide(ScrW() * .2)
+		self:SetWide(ScrW() * 0.35)
 		self:MakePopup()
 	end)
 
-	local txt = string.Wrap("igs.18", text, m:GetWide() - 10)
-	local y = m:GetTitleHeight() + 5
+	local txt = string.Wrap("BATTLEPASS_Item_Completed", text, m:GetWide() - 10)
+	local y = 50
 
 	for _,line in ipairs(txt) do
 		uigs.Create("DLabel", function(self, p)
 			self:SetText(line)
-			self:SetFont("igs.18")
+			self:SetFont("BATTLEPASS_Item_Completed")
 			self:SetTextColor(IGS.col.TEXT_HARD)
 			self:SizeToContents()
 			self:SetPos((p:GetWide() - self:GetWide()) / 2, y)
@@ -21,32 +20,38 @@ function IGS.BoolRequest(title, text, cback)
 	end
 
 	y = y + 5
-	m.btnOK = uigs.Create("igs_button", function(self, p)
+	m.btnOK = uigs.Create("XeninUI.ButtonV2", function(self, p)
 		self:SetText("Да")
-		self:SetPos(5, y)
-		self:SetSize(p:GetWide() / 2 - 7.5, 25)
+		self:SetRoundness(4)
+		self:SetPos(10, y + 5)
+		self:SetSolidColor(Color(49, 160, 99))
+		self:SetStartColor(Color(50, 163, 101))
+		self:SetEndColor(Color(68, 196, 157))
+		self:SetSize(p:GetWide() / 2 - 25, 50)
 		self.DoClick = function()
-			p:Close()
+			p:Remove()
 			cback(true)
 		end
 	end, m)
 
-	m.btnCan = uigs.Create("igs_button", function(self, p)
+	m.btnCan = uigs.Create("XeninUI.ButtonV2", function(self, p)
 		self:SetText("Нет")
-		self:SetPos(p.btnOK:GetWide() + 10, y)
-		self:SetSize(p.btnOK:GetWide(), 25)
-		self:RequestFocus()
+		self:SetRoundness(4)
+		self:SetSolidColor(Color(155, 93, 77))
+		self:SetStartColor(Color(155, 93, 77))
+		self:SetEndColor(Color(155, 93, 77))
+		self:SetPos(p.btnOK:GetWide() + 25, y + 5)
+		self:SetSize(p.btnOK:GetWide() + 15, 50)
 		self.DoClick = function()
-			p:Close()
+			p:Remove()
 			cback(false)
 		end
-		y = y + self:GetTall() + 5
+		y = y + self:GetTall() + 15
 	end, m)
 
 	m:SetTall(y)
 	m:Center()
 
-	m:Focus()
 	return m
 end
 
@@ -58,13 +63,13 @@ function IGS.StringRequest(title, text, default, cback)
 		self:MakePopup()
 	end)
 
-	local txt = string.Wrap("igs.18", text, m:GetWide() - 10)
-	local y = m:GetTitleHeight() + 5
+	local txt = string.Wrap("BATTLEPASS_Item_Completed", text, m:GetWide() - 10)
+	local y = 25
 
 	for _, v in ipairs(txt) do
 		uigs.Create("DLabel", function(self, p)
 			self:SetText(v)
-			self:SetFont("igs.18")
+			self:SetFont("BATTLEPASS_Item_Completed")
 			self:SetTextColor(IGS.col.TEXT_HARD)
 			self:SizeToContents()
 			self:SetPos((p:GetWide() - self:GetWide()) / 2, y)
@@ -79,7 +84,7 @@ function IGS.StringRequest(title, text, default, cback)
 		self:SetValue(default or '')
 		y = y + self:GetTall() + 10
 		self.OnEnter = function()
-			p:Close()
+			p:Remove()
 			cback(self:GetValue())
 		end
 	end, m)
@@ -88,9 +93,8 @@ function IGS.StringRequest(title, text, default, cback)
 		self:SetText("ОК")
 		self:SetPos(5, y)
 		self:SetSize(p:GetWide() / 2 - 7.5, 25)
-		self:SetActive(true)
 		self.DoClick = function()
-			p:Close()
+			p:Remove()
 			cback(tb:GetValue())
 		end
 	end, m)
@@ -99,9 +103,8 @@ function IGS.StringRequest(title, text, default, cback)
 		self:SetText("Отмена")
 		self:SetPos(btnOK:GetWide() + 10, y)
 		self:SetSize(btnOK:GetWide(), 25)
-		self:RequestFocus()
 		self.DoClick = function()
-			m:Close()
+			m:Remove()
 		end
 		y = y + self:GetTall() + 5
 	end, m)
@@ -109,7 +112,6 @@ function IGS.StringRequest(title, text, default, cback)
 	m:SetTall(y)
 	m:Center()
 
-	m:Focus()
 	return m
 end
 

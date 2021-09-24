@@ -175,11 +175,11 @@ if SERVER then
 
 			-- Может измениться сразу две вещи
 			if min_charge_changed then
-				IGS.NotifyAll("Изменена минимальная сумма пополнения: " .. ("(%s > %s руб)"):format(min_charge,iMinCharge))
+				IGS.NotifyAll("Изменена минимальная сумма пополнения: " .. ("(%s > %s эфир)"):format(min_charge,iMinCharge))
 			end
 
 			if cur_price_changed then
-				IGS.NotifyAll("Стоимость донат валюты изменена с " .. cur_price .. " до " .. iCurrencyPrice .. " руб за единицу")
+				IGS.NotifyAll("Стоимость донат валюты изменена с " .. cur_price .. " до " .. iCurrencyPrice .. " эфир за единицу")
 			end
 		end
 	end

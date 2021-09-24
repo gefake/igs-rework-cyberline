@@ -89,7 +89,7 @@ hook.Add("IGS.CatchActivities","profile",function(activity,sidebar)
 		local next_desc = next_lvl:Description()
 
 		ava_bg:AddRow("След. статус", next_lvl:Name() .. (next_desc and ("\n\n%s"):format(next_desc) or ""))
-		ava_bg:AddRow("Нужно", next_lvl:Cost() - IGS.RealPrice( IGS.TotalTransaction(LP) ) .. " руб")
+		ava_bg:AddRow("Нужно", next_lvl:Cost() - IGS.RealPrice( IGS.TotalTransaction(LP) ) .. " эфир")
 	end
 
 	bg.side:AddItem(ava_bg)

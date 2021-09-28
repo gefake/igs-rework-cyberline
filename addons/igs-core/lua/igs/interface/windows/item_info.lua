@@ -72,7 +72,7 @@ function IGS.WIN.Item(uid)
 		end
 
 		-- Открытия другого
-		m:Close()
+		m:Remove()
 		m = nil
 	end
 
